@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'https://cos10025-webapplication.onrender.com';
 
 const fetchData = async (endpoint) => {
   try {

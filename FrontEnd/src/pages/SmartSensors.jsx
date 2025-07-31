@@ -15,7 +15,7 @@ const SmartSensors = () => {
   const fetchingData = async () => {
     // Fetch Sensors Data
     try {
-      const sensorData = await getApi('api/sensors');
+      const sensorData = await getApi('/sensors');
       setEnvironmentalData(sensorData.environmentalsensors || []);
       setStructuralData(sensorData.structuralsensors || []);
       setIsLoading(false);
