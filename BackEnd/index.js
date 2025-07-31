@@ -1,5 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
 
 import { getSensors } from './functions/getSensors.js';
 
@@ -13,6 +17,6 @@ app.use(express.json());
 app.get('/sensors', getSensors);
 
 
-app.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
