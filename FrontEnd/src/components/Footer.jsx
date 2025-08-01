@@ -26,7 +26,7 @@ const Footer = () => {
       <footer className="bg-black py-8 pt-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <p className="text-gray-400">© 2025 Do Gia Huy. All rights reserved.</p>
+            <p className="text-gray-400">© 2025 Gia Huy & Hoang Minh. All rights reserved.</p>
             <div className="flex space-x-6">
               <a href="/" className={`${
                   isActive('/') 

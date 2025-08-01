@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Thermometer, Droplets, Activity, Wind, Leaf, SunDim, RulerDimensionLine, Gauge, CloudHail, AudioWaveform } from 'lucide-react';
+import { Thermometer, Droplets, Activity, Wind, Leaf, SunDim, RulerDimensionLine, Gauge, CloudHail, AudioWaveform, AlertTriangle } from 'lucide-react';
 import { GetTimeDisplay, getSensorStatus } from '../hooks/getComponents';
 import { getApi } from '../hooks/getApiData';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import TimeAgo from 'react-timeago';
 
 const SmartSensors = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,6 +13,7 @@ const SmartSensors = () => {
 
   const [environmentalData, setEnvironmentalData] = useState([]);
   const [structuralData, setStructuralData] = useState([]);
+  const [alertData, setAlertData] = useState([]);
 
   const openModal = (sensorType, sensorData, sensorInfo) => {
     setSelectedSensor({ type: sensorType, data: sensorData, info: sensorInfo });
@@ -30,6 +32,17 @@ const SmartSensors = () => {
       const sensorData = await getApi('/sensors');
       setEnvironmentalData(sensorData.environmentalsensors || []);
       setStructuralData(sensorData.structuralsensors || []);
+      setIsLoading(false);
+    } catch (err) {
+      console.error("Error detected: ", err);
+      setIsLoading(false);
+    }
+
+
+    // Fetch Alerts Data
+    try {
+      const alertData = await getApi('/alerts');
+      setAlertData(alertData || []);
       setIsLoading(false);
     } catch (err) {
       console.error("Error detected: ", err);
@@ -132,6 +145,15 @@ const SmartSensors = () => {
     }
   };
 
+  // Recent Alert
+  const recentAlert = alertData.filter(alert => {
+    const nowTime = Date.now(); 
+    const twentyFourHoursAgo = new Date(nowTime - 24 * 60 * 60 * 1000); 
+    const itemTimestamp = new Date(alert.alerttime); 
+    return itemTimestamp >= twentyFourHoursAgo;
+  });
+
+  // Modal sensors content
   const ModelContent = () => {
     if (!selectedSensor) return null;
 
@@ -235,6 +257,19 @@ const SmartSensors = () => {
             </ResponsiveContainer>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  // Alert Item
+  const AlertItem = ({ message, alerttime }) => {
+    return (
+      <div className="flex items-center justify-between p-4 rounded-lg transition-all duration-300 bg-yellow-50 border-l-4 border-yellow-400 animate-pulse">
+        <div className="flex items-center space-x-3">
+          <AlertTriangle className="text-yellow-500" size={20} />
+          <span className="text-sm font-medium text-gray-700">{message}</span>
+        </div>
+        <span className="text-xs text-gray-500"><TimeAgo date={alerttime}/></span>
       </div>
     );
   };
@@ -449,11 +484,22 @@ const SmartSensors = () => {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-16 bg-gray-200">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-lg text-gray-600">
-            Immediate action available for alerts.
-          </p>
+      <section className="py-16 bg-gray-200 rounded-lg p-6 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-dark-text-white mb-6">Recent Alerts</h2>
+          <div className="space-y-4 overflow-y-auto max-h-[50vh] custom-scrollbar">
+            {recentAlert && recentAlert.length > 0 ? (
+              recentAlert.map((alert, index) => (
+                <div
+                  key={`${alert.alertid}-${alert.alerttime}-${index}`}
+                >
+                  <AlertItem {...alert}/>
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-500">No 24h Alerts Available</div>
+            )}
+          </div>
         </div>
       </section>
     </div>
