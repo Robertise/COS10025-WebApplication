@@ -297,8 +297,12 @@ const SmartSensors = () => {
   // Set Loading animation
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64 mb-150">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      <div className="flex flex-wrap items-center justify-center h-64 mb-150 mt-20">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mb-10"></div>
+        <div className="w-full">
+          <p className="text-center">Please wait...</p>
+          <p className="text-center">The backend is not working 24/7. Therefore, it may take a while to boot the backend from public free domain.</p>
+        </div>
       </div>
     );
   }
