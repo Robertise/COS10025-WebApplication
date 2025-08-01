@@ -21,7 +21,7 @@ export const getSensorStatus = (data, type) => {
     case 'temp':
       switch (true) {
         case (data < 10):
-          return ["bg-blue-500 text-blue-900", "Cold"];
+          return ["bg-blue-300 text-blue-900", "Cold"];
         case (data >= 10 && data <= 25):
           return ["bg-green-200 text-green-900", "Stable"];
         case (data > 25 && data <= 30):
@@ -59,7 +59,7 @@ export const getSensorStatus = (data, type) => {
         case (data <= 300):
           return ["bg-red-300 text-red-950", "Very Unhealthy"];
         default:
-          return ["bg-red-800 text-red-950", "Hazardous"];
+          return ["bg-red-400 text-red-950", "Hazardous"];
       }
 
     case 'wind':
@@ -81,9 +81,9 @@ export const getSensorStatus = (data, type) => {
     case 'light':
       switch (true) {
         case (data < 200):
-          return ["bg-gray-800 text-gray-950", "Dark"];
+          return ["bg-gray-400 text-gray-950", "Dark"];
         case (data >= 200 && data <= 500):
-          return ["bg-gray-600 text-gray-900", "Dim"];
+          return ["bg-gray-200 text-gray-900", "Dim"];
         case (data > 500 && data <= 1000):
           return ["bg-green-200 text-green-900", "Normal"];
         case (data > 1000 && data <= 2000):
@@ -101,7 +101,7 @@ export const getSensorStatus = (data, type) => {
         case (data > 0 && data <= 2.5):
           return ["bg-blue-200 text-blue-900", "Light"];
         case (data > 2.5 && data <= 10):
-          return ["bg-blue-600 text-blue-950", "Moderate"];
+          return ["bg-blue-300 text-blue-950", "Moderate"];
         case (data > 10 && data <= 50):
           return ["bg-red-200 text-red-900", "Heavy"];
         default:

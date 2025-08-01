@@ -20,6 +20,11 @@ button {
   cursor: pointer;
 }
 
+.testtttttttttt {
+  color: #f9fafbc7;
+  color: #02e1ffc4;
+}
+
 
 /* Custom scrollbar styles */
 .custom-scrollbar::-webkit-scrollbar {
@@ -37,5 +42,23 @@ button {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ad1a15;
+}
+
+
+/* Modal scrollbar styles */
+.modal-scrollbar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.modal-scrollbar::-webkit-scrollbar-track {
+  background: #9b9b9ba8;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffffff;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #ad1a15;
 }
